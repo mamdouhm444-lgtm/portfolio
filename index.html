@@ -1,0 +1,1548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jimmy Choo | Mamdouh Rezk Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@200;300;400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --onyx: #0B0B0B;
+            --champagne: #D4AF37;
+            --champagne-light: #E8D5A3;
+            --champagne-dim: rgba(212,175,55,0.15);
+            --cream: #F9F6F0;
+            --nude: #E5D3C3;
+            --nude-dark: #C4A88A;
+            --white: #FFFFFF;
+            --gray-warm: #8A8278;
+            --gray-light: #E8E4DE;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--onyx);
+            color: var(--cream);
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* ===== LOADING SCREEN ===== */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--onyx);
+            z-index: 10000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1), visibility 1.2s;
+        }
+
+        .loading-screen.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .loading-jc {
+            font-family: 'Playfair Display', serif;
+            font-size: 4rem;
+            font-weight: 500;
+            color: var(--champagne);
+            letter-spacing: 8px;
+            animation: loadingPulse 2s ease-in-out infinite;
+        }
+
+        .loading-line {
+            width: 120px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--champagne), transparent);
+            margin: 24px 0;
+            animation: lineExpand 2s ease-in-out infinite;
+        }
+
+        .loading-text {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 0.9rem;
+            color: var(--gray-warm);
+            letter-spacing: 6px;
+            text-transform: uppercase;
+        }
+
+        @keyframes loadingPulse {
+            0%, 100% { opacity: 0.4; transform: scale(0.98); }
+            50% { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes lineExpand {
+            0%, 100% { width: 60px; opacity: 0.3; }
+            50% { width: 140px; opacity: 1; }
+        }
+
+        /* ===== NAVIGATION ===== */
+        .main-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 24px 48px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+
+        .main-nav.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .main-nav.scrolled {
+            background: rgba(11, 11, 11, 0.92);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 16px 48px;
+            border-bottom: 1px solid rgba(212,175,55,0.08);
+        }
+
+        .nav-logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            color: var(--champagne);
+            letter-spacing: 4px;
+            font-weight: 500;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.7rem;
+            color: var(--gray-warm);
+            text-decoration: none;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            transition: color 0.4s ease;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 50%;
+            width: 0;
+            height: 1px;
+            background: var(--champagne);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: translateX(-50%);
+        }
+
+        .nav-links a:hover {
+            color: var(--champagne);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* ===== PARTICLE CANVAS ===== */
+        #particleCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* ===== HERO SECTION ===== */
+        .hero {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(ellipse at 30% 20%, rgba(212,175,55,0.06) 0%, transparent 50%),
+                radial-gradient(ellipse at 70% 80%, rgba(229,211,195,0.04) 0%, transparent 50%);
+            z-index: 0;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            max-width: 900px;
+            padding: 0 24px;
+        }
+
+        .hero-jc-monogram {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(5rem, 12vw, 10rem);
+            font-weight: 500;
+            color: var(--champagne);
+            letter-spacing: 16px;
+            line-height: 1;
+            opacity: 0;
+            transform: translateY(40px);
+            animation: fadeUp 1.4s cubic-bezier(0.4, 0, 0.2, 1) 0.8s forwards;
+        }
+
+        .hero-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.4rem, 3vw, 2.2rem);
+            font-weight: 400;
+            color: var(--cream);
+            letter-spacing: 6px;
+            margin-top: 32px;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeUp 1.4s cubic-bezier(0.4, 0, 0.2, 1) 1.2s forwards;
+        }
+
+        .hero-subtitle {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(1rem, 1.8vw, 1.3rem);
+            font-weight: 300;
+            font-style: italic;
+            color: var(--gray-warm);
+            margin-top: 16px;
+            letter-spacing: 2px;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeUp 1.4s cubic-bezier(0.4, 0, 0.2, 1) 1.5s forwards;
+        }
+
+        .hero-presenter {
+            margin-top: 48px;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeUp 1.4s cubic-bezier(0.4, 0, 0.2, 1) 1.8s forwards;
+        }
+
+        .hero-presenter-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 1rem;
+            color: var(--champagne);
+            letter-spacing: 4px;
+            font-weight: 500;
+        }
+
+        .hero-presenter-role {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.7rem;
+            color: var(--gray-warm);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-top: 8px;
+        }
+
+        .hero-divider {
+            width: 60px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--champagne), transparent);
+            margin: 20px auto;
+            opacity: 0;
+            animation: fadeIn 1.4s ease 2s forwards;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            opacity: 0;
+            animation: fadeIn 1s ease 2.5s forwards;
+            cursor: pointer;
+            z-index: 2;
+        }
+
+        .scroll-indicator span {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.6rem;
+            color: var(--gray-warm);
+            letter-spacing: 4px;
+            text-transform: uppercase;
+        }
+
+        .scroll-line {
+            width: 1px;
+            height: 40px;
+            background: linear-gradient(to bottom, var(--champagne), transparent);
+            animation: scrollBounce 2s ease-in-out infinite;
+        }
+
+        @keyframes fadeUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        @keyframes scrollBounce {
+            0%, 100% { transform: translateY(0); opacity: 0.5; }
+            50% { transform: translateY(8px); opacity: 1; }
+        }
+
+        /* ===== SECTIONS ===== */
+        .section {
+            position: relative;
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 120px 48px;
+            z-index: 1;
+        }
+
+        .section-inner {
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 80px;
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .section-header.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section-number {
+            font-family: 'Playfair Display', serif;
+            font-size: 0.8rem;
+            color: var(--champagne);
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 4vw, 3.2rem);
+            font-weight: 400;
+            color: var(--cream);
+            letter-spacing: 3px;
+            line-height: 1.2;
+        }
+
+        .section-subtitle {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.1rem;
+            font-weight: 300;
+            font-style: italic;
+            color: var(--gray-warm);
+            margin-top: 16px;
+            letter-spacing: 1px;
+        }
+
+        .section-divider {
+            width: 50px;
+            height: 1px;
+            background: var(--champagne);
+            margin: 24px auto 0;
+            opacity: 0.6;
+        }
+
+        /* ===== BRAND DNA CARDS ===== */
+        .brand-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 32px;
+        }
+
+        .brand-card {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(212,175,55,0.08);
+            padding: 48px 36px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 0;
+            transform: translateY(40px);
+        }
+
+        .brand-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .brand-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--champagne), transparent);
+            transform: scaleX(0);
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .brand-card:hover {
+            border-color: rgba(212,175,55,0.2);
+            background: rgba(255,255,255,0.04);
+            transform: translateY(-8px);
+        }
+
+        .brand-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .brand-card-icon {
+            font-size: 2rem;
+            margin-bottom: 24px;
+            opacity: 0.7;
+        }
+
+        .brand-card-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            color: var(--champagne);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+        }
+
+        .brand-card-text {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+            color: var(--gray-warm);
+            line-height: 1.8;
+            letter-spacing: 0.5px;
+        }
+
+        /* ===== PILLARS ===== */
+        .pillars-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .pillars-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .pillar-card {
+            background: rgba(255,255,255,0.015);
+            border: 1px solid rgba(212,175,55,0.06);
+            padding: 48px 40px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 0;
+            transform: translateY(40px);
+        }
+
+        .pillar-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .pillar-card:hover {
+            border-color: rgba(212,175,55,0.15);
+            background: rgba(255,255,255,0.03);
+        }
+
+        .pillar-number {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            font-weight: 300;
+            color: rgba(212,175,55,0.12);
+            position: absolute;
+            top: 20px;
+            right: 28px;
+            line-height: 1;
+        }
+
+        .pillar-label {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.65rem;
+            color: var(--champagne);
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .pillar-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            color: var(--cream);
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+        }
+
+        .pillar-traits {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .pillar-trait {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 0.85rem;
+            font-style: italic;
+            color: var(--nude-dark);
+            letter-spacing: 1px;
+        }
+
+        .pillar-goal {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.75rem;
+            color: var(--gray-warm);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid rgba(212,175,55,0.1);
+        }
+
+        .pillar-points {
+            list-style: none;
+        }
+
+        .pillar-points li {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.82rem;
+            color: var(--gray-warm);
+            line-height: 2;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .pillar-points li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 6px;
+            height: 6px;
+            border: 1px solid var(--champagne);
+            border-radius: 50%;
+            opacity: 0.5;
+        }
+
+        /* ===== CURATION MATRIX ===== */
+        .curation-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+        }
+
+        @media (max-width: 1024px) {
+            .curation-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .curation-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .curation-card {
+            background: rgba(255,255,255,0.015);
+            border: 1px solid rgba(212,175,55,0.06);
+            padding: 40px 28px;
+            text-align: center;
+            position: relative;
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 0;
+            transform: translateY(40px);
+        }
+
+        .curation-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .curation-card:hover {
+            border-color: rgba(212,175,55,0.2);
+            background: rgba(255,255,255,0.03);
+            transform: translateY(-6px);
+        }
+
+        .curation-card:nth-child(1) { border-top: 2px solid rgba(212,175,55,0.3); }
+        .curation-card:nth-child(2) { border-top: 2px solid rgba(212,175,55,0.5); }
+        .curation-card:nth-child(3) { border-top: 2px solid rgba(212,175,55,0.7); }
+        .curation-card:nth-child(4) { border-top: 2px solid var(--champagne); }
+
+        .curation-icon {
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+            opacity: 0.8;
+        }
+
+        .curation-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1rem;
+            color: var(--champagne);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+        }
+
+        .curation-desc {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.8rem;
+            color: var(--gray-warm);
+            line-height: 1.8;
+        }
+
+        /* ===== CRM SECTION ===== */
+        .crm-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: start;
+        }
+
+        @media (max-width: 900px) {
+            .crm-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .crm-block {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .crm-block.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .crm-block-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            color: var(--champagne);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 32px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid rgba(212,175,55,0.15);
+        }
+
+        .tag-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .tag {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.72rem;
+            color: var(--nude);
+            background: rgba(212,175,55,0.08);
+            border: 1px solid rgba(212,175,55,0.12);
+            padding: 8px 16px;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+        }
+
+        .tag:hover {
+            background: rgba(212,175,55,0.15);
+            border-color: rgba(212,175,55,0.3);
+            transform: translateY(-2px);
+        }
+
+        .tag-category {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.65rem;
+            color: var(--gray-warm);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin: 24px 0 12px;
+        }
+
+        .crm-metric {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+        }
+
+        .crm-metric-number {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: var(--champagne);
+            font-weight: 500;
+            min-width: 80px;
+        }
+
+        .crm-metric-label {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.8rem;
+            color: var(--gray-warm);
+            line-height: 1.6;
+        }
+
+        /* ===== IMPACT SECTION ===== */
+        .impact-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+
+        @media (max-width: 768px) {
+            .impact-stats {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .impact-stat {
+            text-align: center;
+            padding: 48px 24px;
+            background: rgba(255,255,255,0.015);
+            border: 1px solid rgba(212,175,55,0.06);
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .impact-stat.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .impact-stat::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 2px;
+            background: var(--champagne);
+            opacity: 0.4;
+        }
+
+        .impact-stat-number {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.5rem, 5vw, 3.5rem);
+            color: var(--champagne);
+            font-weight: 500;
+            line-height: 1;
+        }
+
+        .impact-stat-label {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.75rem;
+            color: var(--gray-warm);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-top: 16px;
+        }
+
+        .impact-stat-sublabel {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 0.85rem;
+            font-style: italic;
+            color: var(--nude-dark);
+            margin-top: 8px;
+        }
+
+        .impact-details {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 32px;
+        }
+
+        @media (max-width: 768px) {
+            .impact-details {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .impact-detail {
+            padding: 32px;
+            background: rgba(255,255,255,0.01);
+            border-left: 2px solid rgba(212,175,55,0.15);
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .impact-detail.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .impact-detail-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1rem;
+            color: var(--champagne);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+        }
+
+        .impact-detail-text {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.82rem;
+            color: var(--gray-warm);
+            line-height: 1.9;
+        }
+
+        /* ===== LISTENING SECTION ===== */
+        .listening-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+        }
+
+        @media (max-width: 900px) {
+            .listening-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .listening-block {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .listening-block.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .listening-list {
+            list-style: none;
+        }
+
+        .listening-list li {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+            color: var(--gray-warm);
+            padding: 16px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .listening-list li:hover {
+            color: var(--cream);
+            padding-left: 8px;
+        }
+
+        .listening-list li::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            border: 1.5px solid var(--champagne);
+            border-radius: 50%;
+            flex-shrink: 0;
+            opacity: 0.6;
+        }
+
+        .story-traits {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+
+        .story-trait {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.78rem;
+            color: var(--gray-warm);
+            padding: 14px 18px;
+            background: rgba(212,175,55,0.04);
+            border: 1px solid rgba(212,175,55,0.08);
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+        }
+
+        .story-trait:hover {
+            background: rgba(212,175,55,0.08);
+            border-color: rgba(212,175,55,0.2);
+            color: var(--cream);
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            position: relative;
+            width: 100%;
+            padding: 80px 48px 60px;
+            text-align: center;
+            border-top: 1px solid rgba(212,175,55,0.06);
+            z-index: 1;
+        }
+
+        .footer-jc {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: var(--champagne);
+            letter-spacing: 8px;
+            margin-bottom: 16px;
+        }
+
+        .footer-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 0.9rem;
+            color: var(--cream);
+            letter-spacing: 4px;
+            margin-bottom: 8px;
+        }
+
+        .footer-role {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.65rem;
+            color: var(--gray-warm);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        .footer-line {
+            width: 40px;
+            height: 1px;
+            background: var(--champagne);
+            margin: 24px auto;
+            opacity: 0.4;
+        }
+
+        /* ===== PROGRESS BAR ===== */
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--champagne), var(--champagne-light));
+            z-index: 10001;
+            transition: width 0.1s linear;
+            opacity: 0;
+        }
+
+        .progress-bar.visible {
+            opacity: 1;
+        }
+
+        /* ===== GOLDEN GLOW EFFECT ===== */
+        .golden-glow {
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(212,175,55,0.06) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* ===== ANIMATION DELAYS ===== */
+        .delay-1 { transition-delay: 0.1s !important; }
+        .delay-2 { transition-delay: 0.2s !important; }
+        .delay-3 { transition-delay: 0.3s !important; }
+        .delay-4 { transition-delay: 0.4s !important; }
+        .delay-5 { transition-delay: 0.5s !important; }
+        .delay-6 { transition-delay: 0.6s !important; }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .main-nav {
+                padding: 16px 24px;
+            }
+            .nav-links {
+                display: none;
+            }
+            .section {
+                padding: 80px 24px;
+            }
+            .hero-jc-monogram {
+                letter-spacing: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-jc">JC</div>
+        <div class="loading-line"></div>
+        <div class="loading-text">Loading Experience</div>
+    </div>
+
+    <!-- Progress Bar -->
+    <div class="progress-bar" id="progressBar"></div>
+
+    <!-- Particle Canvas -->
+    <canvas id="particleCanvas"></canvas>
+
+    <!-- Navigation -->
+    <nav class="main-nav" id="mainNav">
+        <a href="#hero" class="nav-logo">JIMMY CHOO</a>
+        <ul class="nav-links">
+            <li><a href="#brand-dna">Brand DNA</a></li>
+            <li><a href="#service">Service</a></li>
+            <li><a href="#listening">Listening</a></li>
+            <li><a href="#curation">Curation</a></li>
+            <li><a href="#crm">CRM</a></li>
+            <li><a href="#impact">Impact</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-content">
+            <div class="hero-jc-monogram">JC</div>
+            <h1 class="hero-title">AUTHENTIC LUXURY &amp; REGIONAL CRM LEADERSHIP</h1>
+            <p class="hero-subtitle">Merging Brand DNA with Operational Systems &amp; Portfolio Growth</p>
+            <div class="hero-presenter">
+                <div class="hero-divider"></div>
+                <div class="hero-presenter-name">Mamdouh Rezk</div>
+                <div class="hero-presenter-role">Senior Sales Associate &amp; Regional CRM Ambassador</div>
+            </div>
+        </div>
+        <div class="scroll-indicator" onclick="document.getElementById('brand-dna').scrollIntoView({behavior:'smooth'})">
+            <span>Discover</span>
+            <div class="scroll-line"></div>
+        </div>
+    </section>
+
+    <!-- Section 1: Brand DNA -->
+    <section class="section" id="brand-dna">
+        <div class="golden-glow" style="top:10%; left:5%;"></div>
+        <div class="section-inner">
+            <div class="section-header">
+                <div class="section-number">01 — Brand DNA</div>
+                <h2 class="section-title">The Choo Attitude</h2>
+                <p class="section-subtitle">True to who we are—open, creative, and courageous</p>
+                <div class="section-divider"></div>
+            </div>
+            <div class="brand-grid">
+                <div class="brand-card delay-1">
+                    <div class="brand-card-icon">&#10022;</div>
+                    <div class="brand-card-title">Our Mission</div>
+                    <div class="brand-card-text">Create Beauty, Bring the Glamour, and Deliver Joy to every client who walks through our doors.</div>
+                </div>
+                <div class="brand-card delay-2">
+                    <div class="brand-card-icon">&#10022;</div>
+                    <div class="brand-card-title">Who We Are</div>
+                    <div class="brand-card-text">Artists of Joy, Propellers of Dreams, and Glamorous Optimists shaping extraordinary experiences.</div>
+                </div>
+                <div class="brand-card delay-3">
+                    <div class="brand-card-icon">&#10022;</div>
+                    <div class="brand-card-title">Core Values</div>
+                    <div class="brand-card-text">Creativity that inspires, Openness that connects, and Courage that leads with authenticity.</div>
+                </div>
+                <div class="brand-card delay-4">
+                    <div class="brand-card-icon">&#10022;</div>
+                    <div class="brand-card-title">Our Attitude</div>
+                    <div class="brand-card-text">Daring in our approach, Glamorous in our delivery, and Confident in every interaction.</div>
+                </div>
+                <div class="brand-card delay-5" style="grid-column: span 2;">
+                    <div class="brand-card-icon">&#10022;</div>
+                    <div class="brand-card-title">Authentic Luxury</div>
+                    <div class="brand-card-text">We build elevated, genuine connections, empower clients to discover and style our products, and nurture a community where everyone can celebrate what makes them unique. True to who we are—open, creative, and courageous.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 2: The 4 Pillars -->
+    <section class="section" id="service">
+        <div class="golden-glow" style="top:30%; right:10%;"></div>
+        <div class="section-inner">
+            <div class="section-header">
+                <div class="section-number">02 — Service Framework</div>
+                <h2 class="section-title">The Four Pillars of Luxury Experience</h2>
+                <p class="section-subtitle">A structured approach to elevated client engagement</p>
+                <div class="section-divider"></div>
+            </div>
+            <div class="pillars-container">
+                <div class="pillar-card delay-1">
+                    <div class="pillar-number">01</div>
+                    <div class="pillar-label">Real &amp; Curious</div>
+                    <h3 class="pillar-title">CONNECT</h3>
+                    <div class="pillar-traits">
+                        <span class="pillar-trait">Be Real</span>
+                        <span class="pillar-trait">Be Curious</span>
+                    </div>
+                    <div class="pillar-goal">Goal: Provide a warm, elevated welcome and build an authentic connection</div>
+                    <ul class="pillar-points">
+                        <li>Use genuine language and gestures</li>
+                        <li>Eagerly learn about people and visual cues</li>
+                        <li>Discover what brings them into the store</li>
+                    </ul>
+                </div>
+                <div class="pillar-card delay-2">
+                    <div class="pillar-number">02</div>
+                    <div class="pillar-label">Passionate &amp; Engaging</div>
+                    <h3 class="pillar-title">DISCOVER</h3>
+                    <div class="pillar-traits">
+                        <span class="pillar-trait">Be Passionate</span>
+                        <span class="pillar-trait">Be Engaging</span>
+                    </div>
+                    <div class="pillar-goal">Goal: Empower clients to find the perfect items and inspire them to feel part of Jimmy Choo</div>
+                    <ul class="pillar-points">
+                        <li>Inspire with authentic product storytelling</li>
+                        <li>Share unique craftsmanship details</li>
+                        <li>Create a fun, elevated space for exploration</li>
+                    </ul>
+                </div>
+                <div class="pillar-card delay-3">
+                    <div class="pillar-number">03</div>
+                    <div class="pillar-label">Proactive &amp; Credible</div>
+                    <h3 class="pillar-title">STYLE</h3>
+                    <div class="pillar-traits">
+                        <span class="pillar-trait">Be Proactive</span>
+                        <span class="pillar-trait">Be Credible</span>
+                    </div>
+                    <div class="pillar-goal">Goal: Proactively propose complementary items and share credible fashion advice</div>
+                    <ul class="pillar-points">
+                        <li>Apply "Hold it, Try it, Style it" approach</li>
+                        <li>Elevate the space between advisor and client</li>
+                        <li>Share genuine styling grounded in current trends</li>
+                    </ul>
+                </div>
+                <div class="pillar-card delay-4">
+                    <div class="pillar-number">04</div>
+                    <div class="pillar-label">Committed &amp; Thoughtful</div>
+                    <h3 class="pillar-title">BUILD</h3>
+                    <div class="pillar-traits">
+                        <span class="pillar-trait">Be Committed</span>
+                        <span class="pillar-trait">Be Thoughtful</span>
+                    </div>
+                    <div class="pillar-goal">Goal: Plant the clienteling seed to build strong, lifelong relationships</div>
+                    <ul class="pillar-points">
+                        <li>Practice the 2-2-2 Follow-up Method</li>
+                        <li>Build genuine relationships based on trust</li>
+                        <li>Surprise clients with thoughtful gestures beyond the sale</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 3: Listening & Storytelling -->
+    <section class="section" id="listening">
+        <div class="golden-glow" style="bottom:20%; left:15%;"></div>
+        <div class="section-inner">
+            <div class="section-header">
+                <div class="section-number">03 — Behavioral Mastery</div>
+                <h2 class="section-title">Active Listening &amp; Authentic Storytelling</h2>
+                <p class="section-subtitle">The art of turning facts into emotional messages</p>
+                <div class="section-divider"></div>
+            </div>
+            <div class="listening-layout">
+                <div class="listening-block delay-1">
+                    <div class="crm-block-title">Active Listening Core Behaviors</div>
+                    <p style="font-family: 'Inter', sans-serif; font-size: 0.82rem; color: var(--gray-warm); line-height: 1.8; margin-bottom: 28px;">The practice of preparing to listen, conveying mutual understanding, and building deep trust and rapport.</p>
+                    <ul class="listening-list">
+                        <li>Pay Attention &amp; Make Eye Contact</li>
+                        <li>Do Not Interrupt</li>
+                        <li>Ask Open-Ended Questions</li>
+                        <li>Follow Directions to Guide Your Response</li>
+                        <li>Visualize What Is Being Said</li>
+                    </ul>
+                </div>
+                <div class="listening-block delay-2">
+                    <div class="crm-block-title">The Art of Authentic Storytelling</div>
+                    <p style="font-family: 'Inter', sans-serif; font-size: 0.82rem; color: var(--gray-warm); line-height: 1.8; margin-bottom: 28px;">Stories turn facts into emotional messages that appeal to the feeling part of the brain.</p>
+                    <div class="story-traits">
+                        <div class="story-trait">Simple</div>
+                        <div class="story-trait">Authentic</div>
+                        <div class="story-trait">Memorable</div>
+                        <div class="story-trait">Relevant</div>
+                        <div class="story-trait">Interactive</div>
+                        <div class="story-trait">Motivating</div>
+                    </div>
+                    <p style="font-family: 'Cormorant Garamond', serif; font-size: 0.9rem; font-style: italic; color: var(--nude-dark); margin-top: 20px; line-height: 1.7;">Great stories carry a 'wow' moment that transforms a transaction into an unforgettable experience.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 4: Curation Matrix -->
+    <section class="section" id="curation">
+        <div class="golden-glow" style="top:15%; right:5%;"></div>
+        <div class="section-inner">
+            <div class="section-header">
+                <div class="section-number">04 — Proactive Curation</div>
+                <h2 class="section-title">The 4-Product Formula</h2>
+                <p class="section-subtitle">Invite clients into the magical world of Jimmy Choo</p>
+                <div class="section-divider"></div>
+            </div>
+            <p style="font-family: 'Inter', sans-serif; font-size: 0.85rem; color: var(--gray-warm); text-align: center; max-width: 700px; margin: -40px auto 48px; line-height: 1.8;">As artists of joy, we proactively propose 2–3 additional items using this curated framework to elevate every client interaction.</p>
+            <div class="curation-grid">
+                <div class="curation-card delay-1">
+                    <div class="curation-icon">&#9670;</div>
+                    <div class="curation-title">The Requested</div>
+                    <div class="curation-desc">The exact product requested by the client—the foundation of the interaction.</div>
+                </div>
+                <div class="curation-card delay-2">
+                    <div class="curation-icon">&#9670;</div>
+                    <div class="curation-title">The Extra</div>
+                    <div class="curation-desc">A supporting item meeting the same need—alternative size, heel height, or colorway.</div>
+                </div>
+                <div class="curation-card delay-3">
+                    <div class="curation-icon">&#9670;</div>
+                    <div class="curation-title">The Alternative</div>
+                    <div class="curation-desc">A partnering accessory that captures their imagination—bag, scarf, eyewear, fragrance, SLG, or belt.</div>
+                </div>
+                <div class="curation-card delay-4">
+                    <div class="curation-icon">&#9670;</div>
+                    <div class="curation-title">The Dream</div>
+                    <div class="curation-desc">A high-ticket or new collection piece curated from lifestyle discovery that you know they will love.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 5: CRM Architecture -->
+    <section class="section" id="crm">
+        <div class="golden-glow" style="bottom:10%; right:20%;"></div>
+        <div class="section-inner">
+            <div class="section-header">
+                <div class="section-number">05 — CRM Methodology</div>
+                <h2 class="section-title">Custom Tulip CRM Architecture</h2>
+                <p class="section-subtitle">Structured tagging methodology for long-term clienteling excellence</p>
+                <div class="section-divider"></div>
+            </div>
+            <div class="crm-layout">
+                <div class="crm-block delay-1">
+                    <div class="crm-block-title">Approved Tag Taxonomy</div>
+                    <div class="tag-category">Footwear Style</div>
+                    <div class="tag-grid">
+                        <span class="tag">#Style_Pointed-Toe</span>
+                        <span class="tag">#Heel_Kitten</span>
+                        <span class="tag">#Heel_Platform</span>
+                        <span class="tag">#Heel_Stiletto</span>
+                        <span class="tag">#TrainerLover</span>
+                    </div>
+                    <div class="tag-category">Occasion &amp; Material</div>
+                    <div class="tag-grid">
+                        <span class="tag">#Occasion_Wedding</span>
+                        <span class="tag">#RedCarpet</span>
+                        <span class="tag">#TravelLover</span>
+                        <span class="tag">#Suede</span>
+                        <span class="tag">#Exotic</span>
+                    </div>
+                    <div class="tag-category">Client Tiers &amp; Milestones</div>
+                    <div class="tag-grid">
+                        <span class="tag">#Client_VIC</span>
+                        <span class="tag">#HasKids</span>
+                        <span class="tag">#WeddingComing</span>
+                        <span class="tag">#NewInTown</span>
+                    </div>
+                    <div style="margin-top: 32px; padding: 20px; background: rgba(212,175,55,0.04); border: 1px solid rgba(212,175,55,0.1);">
+                        <p style="font-family: 'Cormorant Garamond', serif; font-size: 0.9rem; font-style: italic; color: var(--nude-dark); line-height: 1.7;">The Golden Rule: Apply a strict limit of 1–3 precise tags immediately after transaction, tagging for long-term style intent rather than just the single item purchased.</p>
+                    </div>
+                </div>
+                <div class="crm-block delay-2">
+                    <div class="crm-block-title">Regional Rollout &amp; Training Impact</div>
+                    <div class="crm-metric">
+                        <div class="crm-metric-number">60+</div>
+                        <div class="crm-metric-label">Sales associates and managers personally trained across 3 regional boutiques</div>
+                    </div>
+                    <div class="crm-metric">
+                        <div class="crm-metric-number">3</div>
+                        <div class="crm-metric-label">Boutiques scaled: Dubai Mall, Mall of the Emirates, Abu Dhabi</div>
+                    </div>
+                    <div class="crm-metric">
+                        <div class="crm-metric-number">GM</div>
+                        <div class="crm-metric-label">System pitched directly to General Manager, resulting in Regional CRM Ambassador appointment</div>
+                    </div>
+                    <div style="margin-top: 32px; padding: 24px; background: rgba(255,255,255,0.015); border-left: 2px solid rgba(212,175,55,0.2);">
+                        <p style="font-family: 'Inter', sans-serif; font-size: 0.82rem; color: var(--gray-warm); line-height: 1.9;"><strong style="color: var(--champagne);">Outreach Transformation:</strong> Shifted team-wide outreach from cold, generic mass messaging to high-EQ, personalized communications referencing client lifecycle milestones across WhatsApp and calls.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 6: Commercial Impact -->
+    <section class="section" id="impact">
+        <div class="golden-glow" style="top:20%; left:10%;"></div>
+        <div class="section-inner">
+            <div class="section-header">
+                <div class="section-number">06 — Commercial Impact</div>
+                <h2 class="section-title">Executive Leadership &amp; Performance</h2>
+                <p class="section-subtitle">Quantified excellence in luxury retail operations</p>
+                <div class="section-divider"></div>
+            </div>
+            <div class="impact-stats">
+                <div class="impact-stat delay-1">
+                    <div class="impact-stat-number">AED 3M+</div>
+                    <div class="impact-stat-label">Total Boutique Sales</div>
+                    <div class="impact-stat-sublabel">Over 3 years at Jimmy Choo</div>
+                </div>
+                <div class="impact-stat delay-2">
+                    <div class="impact-stat-number">125%</div>
+                    <div class="impact-stat-label">Weighted YTD Performance</div>
+                    <div class="impact-stat-sublabel">+20% monthly target overachievement</div>
+                </div>
+                <div class="impact-stat delay-3">
+                    <div class="impact-stat-number">3.6 UPT</div>
+                    <div class="impact-stat-label">Region's Highest UPT</div>
+                    <div class="impact-stat-sublabel">FY25 Award recipient</div>
+                </div>
+            </div>
+            <div class="impact-details">
+                <div class="impact-detail delay-1">
+                    <div class="impact-detail-title">Quantitative Metrics</div>
+                    <div class="impact-detail-text">
+                        Secured the region's highest Units Per Transaction at <strong style="color: var(--champagne);">3.6 UPT</strong> with an Average Transaction Value of <strong style="color: var(--champagne);">AED 6,750</strong>. These figures represent sustained excellence in client engagement, product knowledge, and proactive styling execution across every interaction.
+                    </div>
+                </div>
+                <div class="impact-detail delay-2">
+                    <div class="impact-detail-title">Certificates &amp; Recognition</div>
+                    <div class="impact-detail-text">
+                        Earned <strong style="color: var(--champagne);">3x Jimmy Choo Certificates of Achievement</strong> including Highest UPT FY25, Outstanding Performance, and CRM Ambassador Contribution FY26. Additionally recognized with <strong style="color: var(--champagne);">2x Bloomingdale's Top Achiever Awards</strong> for consistent commercial excellence.
+                    </div>
+                </div>
+                <div class="impact-detail delay-3">
+                    <div class="impact-detail-title">Executive Operations</div>
+                    <div class="impact-detail-text">
+                        Authored and delivered <strong style="color: var(--champagne);">weekly Store Trade Reports</strong> covering traffic analysis, conversion rates, UPT tracking, and competitor benchmarking—delivered directly to the Regional General Manager and Retail Director during management absences, ensuring continuity of strategic oversight.
+                    </div>
+                </div>
+                <div class="impact-detail delay-4">
+                    <div class="impact-detail-title">Leadership Philosophy</div>
+                    <div class="impact-detail-text">
+                        Combining deep product expertise with high-EQ clienteling, every interaction is an opportunity to build lasting relationships. The approach merges <strong style="color: var(--champagne);">data-driven CRM architecture</strong> with <strong style="color: var(--champagne);">authentic human connection</strong>—transforming transactions into lifelong brand advocacy.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-jc">JC</div>
+        <div class="footer-name">Mamdouh Rezk</div>
+        <div class="footer-line"></div>
+        <div class="footer-role">Senior Sales Associate &amp; Regional CRM Ambassador</div>
+    </footer>
+
+    <script>
+        // ===== LOADING SCREEN =====
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('loadingScreen').classList.add('hidden');
+                document.getElementById('mainNav').classList.add('visible');
+            }, 2000);
+        });
+
+        // ===== PARTICLE SYSTEM =====
+        const canvas = document.getElementById('particleCanvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        let mouseX = 0;
+        let mouseY = 0;
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 1.5 + 0.5;
+                this.speedX = (Math.random() - 0.5) * 0.3;
+                this.speedY = (Math.random() - 0.5) * 0.3;
+                this.opacity = Math.random() * 0.3 + 0.1;
+            }
+
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+
+                // Mouse interaction
+                const dx = mouseX - this.x;
+                const dy = mouseY - this.y;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+                if (dist < 150) {
+                    this.x -= dx * 0.01;
+                    this.y -= dy * 0.01;
+                }
+
+                if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+                if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(212, 175, 55, ${this.opacity})`;
+                ctx.fill();
+            }
+        }
+
+        function initParticles() {
+            particles = [];
+            const count = Math.min(80, Math.floor((canvas.width * canvas.height) / 15000));
+            for (let i = 0; i < count; i++) {
+                particles.push(new Particle());
+            }
+        }
+        initParticles();
+
+        function drawConnections() {
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+
+                    if (dist < 120) {
+                        ctx.beginPath();
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.strokeStyle = `rgba(212, 175, 55, ${0.06 * (1 - dist / 120)})`;
+                        ctx.lineWidth = 0.5;
+                        ctx.stroke();
+                    }
+                }
+            }
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            drawConnections();
+            requestAnimationFrame(animateParticles);
+        }
+        animateParticles();
+
+        window.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        });
+
+        // ===== SCROLL ANIMATIONS =====
+        const observerOptions = {
+            threshold: 0.15,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.section-header, .brand-card, .pillar-card, .curation-card, .crm-block, .listening-block, .impact-stat, .impact-detail').forEach(el => {
+            observer.observe(el);
+        });
+
+        // ===== NAV SCROLL EFFECT =====
+        const nav = document.getElementById('mainNav');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 100) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+
+        // ===== PROGRESS BAR =====
+        const progressBar = document.getElementById('progressBar');
+        window.addEventListener('scroll', () => {
+            const scrollTop = window.scrollY;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const progress = (scrollTop / docHeight) * 100;
+            progressBar.style.width = progress + '%';
+            if (scrollTop > 100) {
+                progressBar.classList.add('visible');
+            } else {
+                progressBar.classList.remove('visible');
+            }
+        });
+
+        // ===== SMOOTH SCROLL FOR NAV LINKS =====
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const target = document.querySelector(link.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        // ===== PARALLAX EFFECT =====
+        window.addEventListener('scroll', () => {
+            const scrolled = window.scrollY;
+            document.querySelectorAll('.golden-glow').forEach((glow, i) => {
+                const speed = 0.05 + (i * 0.02);
+                glow.style.transform = `translateY(${scrolled * speed}px)`;
+            });
+        });
+    </script>
+</body>
+</html>
