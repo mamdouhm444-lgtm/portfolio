@@ -136,7 +136,7 @@
 
         .nav-links {
             display: flex;
-            gap: 32px;
+            gap: 28px;
             list-style: none;
         }
 
@@ -924,6 +924,170 @@
             color: var(--cream);
         }
 
+        /* ===== NATIVE PRESENTATION DECK SHOWCASE ===== */
+        .deck-container {
+            position: relative;
+            background: rgba(18, 18, 18, 0.95);
+            border: 1px solid rgba(212, 175, 55, 0.25);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 0 0 30px rgba(212, 175, 55, 0.05);
+            max-width: 1000px;
+            margin: 0 auto;
+            overflow: hidden;
+            border-radius: 4px;
+        }
+
+        .deck-viewport {
+            width: 100%;
+            min-height: 520px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .deck-slides {
+            display: flex;
+            transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+            width: 100%;
+            height: 100%;
+        }
+
+        .deck-slide {
+            min-width: 100%;
+            padding: 56px 48px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            background: linear-gradient(135deg, rgba(15,15,15,1) 0%, rgba(22,22,22,1) 100%);
+            box-sizing: border-box;
+            position: relative;
+        }
+
+        .slide-tag {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.65rem;
+            color: var(--champagne);
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+
+        .slide-header-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.4rem, 2.5vw, 2.2rem);
+            color: var(--cream);
+            margin-bottom: 16px;
+            line-height: 1.2;
+        }
+
+        .slide-body-content {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.88rem;
+            color: var(--gray-warm);
+            line-height: 1.8;
+            margin-bottom: 24px;
+        }
+
+        .slide-grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-top: 16px;
+        }
+
+        .slide-grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-top: 16px;
+        }
+
+        @media (max-width: 768px) {
+            .slide-grid-2, .slide-grid-3 {
+                grid-template-columns: 1fr;
+            }
+            .deck-slide {
+                padding: 36px 24px;
+            }
+            .deck-viewport {
+                min-height: 580px;
+            }
+        }
+
+        .slide-box {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(212, 175, 55, 0.1);
+            padding: 20px;
+            border-radius: 2px;
+        }
+
+        .slide-box-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 0.95rem;
+            color: var(--champagne);
+            margin-bottom: 8px;
+        }
+
+        .slide-box-desc {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.8rem;
+            color: var(--gray-warm);
+            line-height: 1.6;
+        }
+
+        .deck-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 32px;
+            background: rgba(11, 11, 11, 0.95);
+            border-top: 1px solid rgba(212, 175, 55, 0.15);
+        }
+
+        .deck-btn {
+            background: transparent;
+            border: 1px solid var(--champagne);
+            color: var(--champagne);
+            padding: 10px 24px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .deck-btn:hover {
+            background: var(--champagne);
+            color: var(--onyx);
+        }
+
+        .deck-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+            border-color: var(--gray-warm);
+            color: var(--gray-warm);
+        }
+
+        .deck-counter {
+            font-family: 'Playfair Display', serif;
+            font-size: 0.9rem;
+            color: var(--champagne);
+            letter-spacing: 3px;
+        }
+
+        .deck-progress-bar {
+            width: 100%;
+            height: 3px;
+            background: rgba(255, 255, 255, 0.05);
+            position: relative;
+        }
+
+        .deck-progress-fill {
+            height: 100%;
+            background: var(--champagne);
+            width: 10%;
+            transition: width 0.3s ease;
+        }
+
         /* ===== FOOTER ===== */
         .footer {
             position: relative;
@@ -1017,6 +1181,7 @@
             }
         }
     </style>
+<base target="_blank">
 </head>
 <body>
     <!-- Loading Screen -->
@@ -1041,6 +1206,7 @@
             <li><a href="#listening">Listening</a></li>
             <li><a href="#curation">Curation</a></li>
             <li><a href="#crm">CRM</a></li>
+            <li><a href="#deck">Deck</a></li>
             <li><a href="#impact">Impact</a></li>
         </ul>
     </nav>
@@ -1316,12 +1482,235 @@
         </div>
     </section>
 
-    <!-- Section 6: Commercial Impact -->
+    <!-- Section 6: Native Presentation Deck Showcase -->
+    <section class="section" id="deck">
+        <div class="golden-glow" style="top:25%; left:10%;"></div>
+        <div class="section-inner">
+            <div class="section-header">
+                <div class="section-number">06 — Featured Presentation</div>
+                <h2 class="section-title">Regional Training Deck</h2>
+                <p class="section-subtitle">Interactive presentation detailing the Tulip CRM methodology &amp; GCC rollout</p>
+                <div class="section-divider"></div>
+            </div>
+
+            <div class="deck-container">
+                <div class="deck-progress-bar">
+                    <div class="deck-progress-fill" id="deckProgress"></div>
+                </div>
+                
+                <div class="deck-viewport">
+                    <div class="deck-slides" id="deckSlides">
+                        
+                        <!-- Slide 1 -->
+                        <div class="deck-slide">
+                            <div>
+                                <div class="slide-tag">Slide 01 / Overview</div>
+                                <h3 class="slide-header-title">CRM Hashtag &amp; Clienteling Training Program</h3>
+                                <div class="slide-body-content">
+                                    A Regional Training Methodology - Designed, Delivered &amp; Scaled across Jimmy Choo GCC by Mamdouh Rezk (Regional CRM Ambassador).
+                                </div>
+                                <div class="slide-grid-2">
+                                    <div class="slide-box">
+                                        <div class="slide-box-title">Objective</div>
+                                        <div class="slide-box-desc">Replace generic cold messaging with structured, hashtag-driven outreach.</div>
+                                    </div>
+                                    <div class="slide-box">
+                                        <div class="slide-box-title">Regional Scope</div>
+                                        <div class="slide-box-desc">60+ advisors trained across Dubai Mall, Mall of the Emirates &amp; Abu Dhabi.</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Slide 2 -->
+                        <div class="deck-slide">
+                            <div>
+                                <div class="slide-tag">Slide 02 / Core Philosophy</div>
+                                <h3 class="slide-header-title">The Business Challenge &amp; Strategy</h3>
+                                <div class="slide-body-content">
+                                    "The product starts the conversation. The relationship sustains the business."
+                                </div>
+                                <div class="slide-grid-2">
+                                    <div class="slide-box">
+                                        <div class="slide-box-title">The Problem</div>
+                                        <div class="slide-box-desc">Blind messaging treats every client the same. Personal milestones and preferences get lost in unorganized text profiles.</div>
+                                    </div>
+                                    <div class="slide-box">
+                                        <div class="slide-box-title">The Solution</div>
+                                        <div class="slide-box-desc">A clean, filterable #Category_Subcategory system in the Tulip CRM app to segment clients by style intent and life moments.</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Slide 3 -->
+                        <div class="deck-slide">
+                            <div>
+                                <div class="slide-tag">Slide 03 / Client Journey</div>
+                                <h3 class="slide-header-title">The 7-Step Luxury Service Funnel</h3>
+                                <div class="slide-body-content">
+                                    How frontline clienteling connects to long-term portfolio growth:
+                                </div>
+                                <div class="slide-grid-3">
+                                    <div class="slide-box">
+                                        <div class="slide-box-title">1. Greeting</div>
+                                        <div class="slide-box-desc">Build instant warmth &amp; rapport.</div>
+                                    </div>
+                                    <div class="slide-box">
+                                        <div class="slide-box-title">2. Discovery</div>
+                                        <div class="slide-box-desc">Uncover travel &amp; lifestyle cues.</div>
+                                    </div>
+                                    <div class="slide-box">
+                                        <div class="slide-box-title">3. Styling</div>
+                                        <div class="slide-box-desc">Apply "Hold it, Try it, Style it".</div>
+                                    </div>
+                                    <div class="slide-box">
+                                        <div class="slide-box-title">4. CRM Tagging</div>
+                                        <div class="slide-box-desc">Apply 1-3 hashtag notes post-sale.</div>
+                                    </div>
+                                    <div class="slide-box">
+                                        <div class="slide-box-title">5. After-Sales</div>
+                                        <div class="slide-box-desc">Practice 2-2-2 follow-up method.</div>
+                                    </div>
+                                    <div class="slide-box">
+                                        <div class="slide-box-title">6. Relationship</div>
+                                        <div class="slide-box-desc">Sustain long-term VIP retention.</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Slide 4 -->
+                        <div class="deck-slide">
+                            <div>
+                                <div class="slide-tag">Slide 04 / Database Segmentation</div>
+                                <h3 class="slide-header-title">Client Portfolio Tiers</h3>
+                                <div class="slide-body-content">
+                                    Allocating outreach cadence based on client lifecycle:
+                                </div>
+                                <div class="slide-grid-2">
+                                    <div class="slide-box">
+                                        <div class="slide-box-title">VIC (Very Important Client)</div>
+                                        <div class="slide-box-desc">Highest-tier spenders. Receive priority allocation on limited editions and private event invites.</div>
+                                    </div>
+                                    <div class="slide-box">
+                                        <div class="slide-box-title">Regulars &amp; Prospects</div>
+                                        <div class="slide-box-desc">Consistent buyers &amp; high-potential visitors. Nurtured with personalized new season lookbooks.</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Slide 5 -->
+                        <div class="deck-slide">
+                            <div>
+                                <div class="slide-tag">Slide 05 / Tag Architecture</div>
+                                <h3 class="slide-header-title">The Hashtag Methodology</h3>
+                                <div class="slide-body-content">
+                                    Format: <code>#Category_Subcategory</code> inside Tulip Notes.
+                                </div>
+                                <div class="slide-grid-2">
+                                    <div class="slide-box">
+                                        <div class="slide-box-title">Tag Intent, Not Just Purchase</div>
+                                        <div class="slide-box-desc">If a client buys sneakers but admires bridal pumps, tag #Occasion_Wedding to capture future opportunity.</div>
+                                    </div>
+                                    <div class="slide-box">
+                                        <div class="slide-box-title">Keep Data Query-Ready</div>
+                                        <div class="slide-box-desc">Strict 1–3 tag limit per entry so boutique managers can instantly filter profiles during new stock launches.</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Slide 6 -->
+                        <div class="deck-slide">
+                            <div>
+                                <div class="slide-tag">Slide 06 / Outreach Transformation</div>
+                                <h3 class="slide-header-title">From Raw Data to High-EQ Messaging</h3>
+                                <div class="slide-body-content">
+                                    Comparing generic outreach against personalized clienteling:
+                                </div>
+                                <div class="slide-grid-2">
+                                    <div class="slide-box" style="border-color: rgba(255,100,100,0.2);">
+                                        <div class="slide-box-title" style="color: #ff8888;">Generic Outreach (Before)</div>
+                                        <div class="slide-box-desc">"Hi, checking in - let us know if you need anything!" (Mass-sent, impersonal, easy to ignore).</div>
+                                    </div>
+                                    <div class="slide-box" style="border-color: rgba(212,175,55,0.4);">
+                                        <div class="slide-box-title">High-EQ Clienteling (After)</div>
+                                        <div class="slide-box-desc">"Hi Client A, the suede pointed-toe pump you loved during your last visit just arrived in your size—thought of you first."</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Slide 7 -->
+                        <div class="deck-slide">
+                            <div>
+                                <div class="slide-tag">Slide 07 / Operations &amp; KPIs</div>
+                                <h3 class="slide-header-title">Trade Reporting Pipeline</h3>
+                                <div class="slide-body-content">
+                                    How CRM tagging directly feeds executive reporting and Thursday regional briefings:
+                                </div>
+                                <div class="slide-grid-3">
+                                    <div class="slide-box">
+                                        <div class="slide-box-title">EPOS Extraction</div>
+                                        <div class="slide-box-desc">Weekly net sales, traffic &amp; conversion logs.</div>
+                                    </div>
+                                    <div class="slide-box">
+                                        <div class="slide-box-title">Synthesis</div>
+                                        <div class="slide-box-desc">Analyzing UPT, ATV &amp; category trends.</div>
+                                    </div>
+                                    <div class="slide-box">
+                                        <div class="slide-box-title">Executive Briefing</div>
+                                        <div class="slide-box-desc">Submitted directly to GM &amp; Retail Director.</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Slide 8 -->
+                        <div class="deck-slide">
+                            <div>
+                                <div class="slide-tag">Slide 08 / Impact &amp; Recognition</div>
+                                <h3 class="slide-header-title">Quantified Results &amp; Honors</h3>
+                                <div class="slide-body-content">
+                                    Measuring the success of the regional rollout across the GCC:
+                                </div>
+                                <div class="slide-grid-3">
+                                    <div class="slide-box">
+                                        <div class="slide-box-title">125% YTD</div>
+                                        <div class="slide-box-desc">Weighted YTD sales target average.</div>
+                                    </div>
+                                    <div class="slide-box">
+                                        <div class="slide-box-title">3.6 UPT</div>
+                                        <div class="slide-box-desc">Region's highest Units Per Transaction.</div>
+                                    </div>
+                                    <div class="slide-box">
+                                        <div class="slide-box-title">AED 3M+</div>
+                                        <div class="slide-box-desc">Cumulative store revenue generated.</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="deck-controls">
+                    <button class="deck-btn" id="deckPrev" disabled>&larr; Prev</button>
+                    <div class="deck-counter" id="deckCounter">01 / 08</div>
+                    <button class="deck-btn" id="deckNext">Next &rarr;</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 7: Commercial Impact -->
     <section class="section" id="impact">
         <div class="golden-glow" style="top:20%; left:10%;"></div>
         <div class="section-inner">
             <div class="section-header">
-                <div class="section-number">06 — Commercial Impact</div>
+                <div class="section-number">07 — Commercial Impact</div>
                 <h2 class="section-title">Executive Leadership &amp; Performance</h2>
                 <p class="section-subtitle">Quantified excellence in luxury retail operations</p>
                 <div class="section-divider"></div>
@@ -1371,32 +1760,7 @@
             </div>
         </div>
     </section>
-<!-- Section 7: Presentation Showcase -->
-    <section class="section" id="presentation">
-        <div class="golden-glow" style="top:25%; left:10%;"></div>
-        <div class="section-inner">
-            <div class="section-header">
-                <div class="section-number">07 — Featured Methodology</div>
-                <h2 class="section-title">Regional CRM Strategy</h2>
-                <p class="section-subtitle">Explore the complete training deck created for boutique teams across the GCC</p>
-                <div class="section-divider"></div>
-            </div>
-            
-            <div style="background: rgba(255,255,255,0.015); border: 1px solid rgba(212,175,55,0.2); padding: 48px 24px; text-align: center; max-width: 800px; margin: 0 auto;">
-                <div style="font-family: 'Playfair Display', serif; font-size: 1.4rem; color: #D4AF37; margin-bottom: 16px;">
-                    Jimmy Choo CRM Hashtag & Clienteling Program
-                </div>
-                <p style="font-family: 'Inter', sans-serif; font-size: 0.85rem; color: #8A8278; line-height: 1.8; margin-bottom: 32px;">
-                    Executive presentation detailing the custom hashtag database architecture, high-EQ outreach triggers, and regional rollout across Dubai and Abu Dhabi.
-                </p>
-                
-                <a href="CRM-Presentation.pdf" target="_blank" ...style="display: inline-block; font-family: 'Inter', sans-serif; font-size: 0.75rem; color: #0B0B0B; background: #D4AF37; border: 1px solid #D4AF37; padding: 14px 32px; letter-spacing: 3px; text-transform: uppercase; text-decoration: none; font-weight: 600;">
-                    View Presentation (PDF) &#8594;
-                </a>
-            </div>
-        </div>
-    </section>
-    
+
     <!-- Footer -->
     <footer class="footer">
         <div class="footer-jc">JC</div>
@@ -1568,5 +1932,63 @@
                 glow.style.transform = `translateY(${scrolled * speed}px)`;
             });
         });
+
+        // ===== NATIVE PRESENTATION DECK CAROUSEL CONTROLLER =====
+        const slidesContainer = document.getElementById('deckSlides');
+        const prevBtn = document.getElementById('deckPrev');
+        const nextBtn = document.getElementById('deckNext');
+        const counterEl = document.getElementById('deckCounter');
+        const progressFill = document.getElementById('deckProgress');
+        
+        let currentSlide = 0;
+        const totalSlides = document.querySelectorAll('.deck-slide').length;
+
+        function updateDeck() {
+            slidesContainer.style.transform = `translateX(-${currentSlide * 100}%)`;
+            
+            // Counter Text
+            const formattedCurrent = String(currentSlide + 1).padStart(2, '0');
+            const formattedTotal = String(totalSlides).padStart(2, '0');
+            counterEl.textContent = `${formattedCurrent} / ${formattedTotal}`;
+            
+            // Progress Bar
+            const progressPercent = ((currentSlide + 1) / totalSlides) * 100;
+            progressFill.style.width = `${progressPercent}%`;
+            
+            // Buttons State
+            prevBtn.disabled = currentSlide === 0;
+            nextBtn.disabled = currentSlide === totalSlides - 1;
+        }
+
+        prevBtn.addEventListener('click', () => {
+            if (currentSlide > 0) {
+                currentSlide--;
+                updateDeck();
+            }
+        });
+
+        nextBtn.addEventListener('click', () => {
+            if (currentSlide < totalSlides - 1) {
+                currentSlide++;
+                updateDeck();
+            }
+        });
+
+        // Keyboard arrow support
+        document.addEventListener('keydown', (e) => {
+            const deckSection = document.getElementById('deck');
+            const rect = deckSection.getBoundingClientRect();
+            // Only trigger if slide deck is visible in viewport
+            if (rect.top < window.innerHeight && rect.bottom > 0) {
+                if (e.key === 'ArrowRight' && currentSlide < totalSlides - 1) {
+                    currentSlide++;
+                    updateDeck();
+                } else if (e.key === 'ArrowLeft' && currentSlide > 0) {
+                    currentSlide--;
+                    updateDeck();
+                }
+            }
+        });
     </script>
+</body>
 </html>
